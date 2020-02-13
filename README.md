@@ -1,6 +1,6 @@
 # ReactStudy
 
-## [0. React 소개](0. React 소개/React-CLI.md)
+## 0. React 소개
 
 ## 1. React CLI
 
