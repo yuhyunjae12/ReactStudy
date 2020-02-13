@@ -82,13 +82,24 @@
         1. Create React App의 자세한 정리 https://github.com/facebook/create-react-app#create-react-app-
 
     - create-react-app 글로벌 설치 (npm install -g create-react-app)
-    - 앱 생성 (create-react-app react-study)
+    - 앱 생성 (create-react-app react-todo)
 
 ```javascript
+    
+    // 프로젝트 생성
 
     npm install -g create-react-app
 
-    create-react-app react-study
+    create-react-app react-todo
 
 ```
 
+```javascript
+
+    // 프로젝트 실행 (기본 포트 : 3000)
+
+    cd react-todo
+
+    npm start
+
+```
