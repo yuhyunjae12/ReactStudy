@@ -194,3 +194,68 @@
         export default App;
 
     ```
+
+- 라우터 파라미터 사용
+
+    - 라우터 경로를 통해 특정 파라미터를 전달하는 방법에는 두가지(params, query) 방법이 있습니다
+
+        1. params 
+        2. query
+    
+    - 라우터로 설정된 컴포넌트는 3가지의 props를 전달 받게 됩니다.
+
+        - history : push, replace를 동해 이전 페이지 또는 앞뒤 페이지 전환을 할 수 있습니다.
+        - location : 현재 경로에 대한 정보와 url query('/board?no=1')정보도 가지고 있습니다.
+        - match : 라우트에 매칭 정보와 params('/board/:boardNo')정보를 가지고 있습니다.
+
+    - Example (params)
+
+        - src/shared/App.js 수정
+
+        ```javascript
+
+            import React, { Component } from 'react';
+            // route import
+            import { Route, Switch } from 'react-router-dom';
+            import { Home, Board } from 'pages';
+
+            class App extends Component {
+                render() {
+                    return (
+                        <div>
+                            // 라우트를 설정할 때에는 Route컴포넌트를 사용
+                            // 경로는 path
+                            // exact의 역할은 path에 설정된 경로에 정확하게 맞아 떨어져야만 Home컴포넌트를 렌더링 해줍니다.
+                            <Route exact path='/' component={Home}  />
+                            // Switch 컴포넌트를 사용하면 첫번째로 매칭되는 라우트만 보여주고 나머지는 보여주지 않습니다.
+                            <Switch>
+                                // params를 설정할때에는 :boardNo의 형식으로 설정합니다.
+                                <Route path='/board/:boardNo' component={Board} />
+                                <Route path='/board' component={Board} />
+                            </Switch>
+                        </div>
+                    );
+                }
+            }
+
+            export default App;
+
+        ```        
+    - src/pages/Board.js 수정
+
+        ```javascript
+
+           import React from 'react';
+
+            const Board = ({match}) => {
+                return (
+                    <div>
+                        // boardNo 라는 params를 match.parmas.boardNo를 통하여 확인 할 수 있습니다.
+                        Board : {match.parmas.boardNo}
+                    </div>
+                );
+            };
+
+            export default Board;
+
+        ```        
