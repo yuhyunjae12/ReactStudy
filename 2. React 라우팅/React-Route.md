@@ -293,3 +293,107 @@
 
         ```    
         - 'http://localhost:3000/Board/test?no=1'으로 테스트
+
+- Link 컴포넌트 사용
+
+    - 리액트에서는 <a href='/'></a>를 사용하게 되면 안됩니다.
+    앵커 태그를 사용하게 되면 페이지가 리로드 되어버리기 때문입니다.
+    그래서 사용하는 컴포넌트가 Link 컴포넌트입니다.
+
+    - src/components/Menu.js 추가
+
+    ```javascript
+
+        import React from 'react';
+        // Link import
+        import { Link } from 'react-router-dom';
+
+         const Menu = () => {
+             return (
+                 <div>
+                     <ul>
+                         <li><Link to="/">Home</Link></li>
+                         <li><Link to="/Board">Board</Link></li>
+                         <li><Link to="/Board/test">Board test</Link></li>
+                         <li><Link to="/Board/test?no=1">Board test no 1</Link></li>
+                     </ul>
+                     <hr/>
+                 </div>
+             );
+         };
+
+        export default Menu;
+
+    ```
+
+    - src/shared/App.js 수정
+
+    ```javascript
+
+        import React, { Component } from 'react';
+        import { Route, Switch } from 'react-router-dom';
+        import { Home, Board } from 'pages';
+        // Menu import
+        import Menu from 'components/Menu';
+
+        class App extends Component {
+            render() {
+                return (
+                    <div>
+                        // 메뉴 컴포넌트 추가
+                        <Menu/>
+                        
+                        <Route exact path='/' component={Home}  />
+                        <Switch>
+                            <Route path='/board/:boardNo' component={Board} />
+                            <Route path='/board' component={Board} />
+                        </Switch>
+                    </div>
+                );
+            }
+        }
+
+        export default App;
+
+    ```
+
+    - 'http://localhost:3000/ 테스트
+
+- NavLink 컴포넌트 사용
+
+    - NavLink 컴포넌트는 Link컴포넌트와 비슷한데 활성화된 메뉴 컴포넌트에 css를 적용할 수 있습니다.
+
+    - src/components/Menu.js 수정
+
+    ```javascript
+
+        import React from 'react';
+        // NavLink import
+        import { NavLink } from 'react-router-dom';
+
+        // NavLink case
+        const Menu = () => {
+
+            // 활성 컴포넌트 css 설정
+            const activeStyle ={
+                color: 'red',
+                fontSize: '2rem'
+            }
+
+            return (
+                <div>
+                    <ul>
+                        <li><NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink></li>
+                        <li><NavLink exact to="/Board" activeStyle={activeStyle}>Board</NavLink></li>
+                        <li><NavLink exact to="/Board/test" activeStyle={activeStyle}>Board test</NavLink></li>
+                        <li><NavLink exact to="/Board/test?no=1" activeStyle={activeStyle}>Board test no 1</NavLink></li>
+                    </ul>
+                    <hr/>
+                </div>
+            );
+        };
+
+        export default Menu;
+
+    ```
+    - 'http://localhost:3000/ 테스트
