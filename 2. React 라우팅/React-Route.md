@@ -198,9 +198,6 @@
 - 라우터 파라미터 사용
 
     - 라우터 경로를 통해 특정 파라미터를 전달하는 방법에는 두가지(params, query) 방법이 있습니다
-
-        1. params 
-        2. query
     
     - 라우터로 설정된 컴포넌트는 3가지의 props를 전달 받게 됩니다.
 
@@ -241,7 +238,7 @@
             export default App;
 
         ```        
-    - src/pages/Board.js 수정
+        - src/pages/Board.js 수정
 
         ```javascript
 
@@ -258,4 +255,41 @@
 
             export default Board;
 
-        ```        
+        ```    
+    - Example (query)
+
+        - queryString 라이브러리 추가
+
+        ```javascript
+
+            npm add query-string
+
+        ```   
+
+        - src/pages/Board.js
+
+        ```javascript
+
+           import React from 'react';
+           // query String import
+           import queryString from 'query-string';
+
+            const Board = ({location, match}) => {
+                const query = queryString.parse(location.search);
+
+                // 파라미터가 정상적으로 전달 되는지 테스트 하기위함
+                const no = query.no ==1;
+
+                return (
+                    <div>
+                        // 만약에 정상적으로 no 가 1로 전달 된다면 
+                        // queryTest 텍스트가 표시 될것 입니다.
+                        query : {no && 'no:queryTest'}
+                    </div>
+                );
+            };
+
+            export default Board;
+
+        ```    
+        - 'http://localhost:3000/Board/test?no=1'으로 테스트
