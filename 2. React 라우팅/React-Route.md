@@ -115,5 +115,82 @@
     ```javascript
 
         npm start
-        
+
+    ```
+
+- 라우트 컴포넌트 생성
+
+    - src/pages/Home.js
+
+    ```javascript
+
+       import React from 'react';
+
+        const Home = () => {
+            return (
+                <div>
+                    HOME
+                </div>
+            );
+        };
+
+        export default Home;
+
+    ```
+
+    - src/pages/Board.js
+
+    ```javascript
+
+       import React from 'react';
+
+        const Board = () => {
+            return (
+                <div>
+                    Board
+                </div>
+            );
+        };
+
+        export default Board;
+
+    ```
+
+    - src/pages/index.js
+
+    ```javascript
+
+        // 생성한 라우터 컴포넌트를 공통으로 관리할 인덱스 컴포넌트
+        export { default as Home } from './Home';
+        export { default as Board } from './Board';
+
+    ```
+
+- 라우트 설정
+
+    - src/shared/App.js
+
+    ```javascript
+
+        import React, { Component } from 'react';
+        // route import
+        import { Route } from 'react-router-dom';
+        import { Home, Board } from 'pages';
+
+        class App extends Component {
+            render() {
+                return (
+                    <div>
+                        // 라우트를 설정할 때에는 Route컴포넌트를 사용
+                        // 경로는 path
+                        // exact의 역할은 path에 설정된 경로에 정확하게 맞아 떨어져야만 Home컴포넌트를 렌더링 해줍니다.
+                        <Route exact path='/' component={Home}  />
+                        <Route path='/board' component={Board} />
+                    </div>
+                );
+            }
+        }
+
+        export default App;
+
     ```
