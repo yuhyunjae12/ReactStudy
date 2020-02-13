@@ -2,7 +2,7 @@
 
 - 기본 디렉토리 구성
 
-![](0.0_dom.png)
+![](0.0_directory.png)
 
 - package.json 살펴보기
 
