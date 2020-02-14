@@ -115,6 +115,9 @@
         console.log(arrow1('arrow'));
 
         ```
+        - 결과
+
+        ![](0.0_arrow.png)
 
         - 화살표 함수는 위 예제코드와 같이 익명 함수에서만 사용이 가능 합니다.
             
@@ -146,13 +149,16 @@
         console.log('forEach ver1 : ' + numberResult);
 
         // 위 forEach문에 화살표 함수 사용
-        number.forEach((no) => {
+        numberList.forEach((no) => {
             numberResult.push(no);
         })
 
         console.log('forEach ver2 : ' + numberResult);
 
     ```
+    - 결과
+
+    ![](0.1_Loop.png)
 
     - Map 함수 예제
 
@@ -167,6 +173,10 @@
 
     ```
 
+    - 결과
+
+    ![](0.2_map.png)
+
     - Filter 함수 예제
 
     ```javascript
@@ -179,6 +189,10 @@
     console.log(arrResult);
 
     ```
+
+    - 결과
+
+    ![](0.3_filter.png)
 
     - Find 함수 예제
 
@@ -193,6 +207,10 @@
 
 
     ```
+
+    - 결과
+
+    ![](0.4_find.png)
 
     - Reduce 함수 예제
 
@@ -241,3 +259,7 @@
     console.log(arr3Result);
 
     ```
+
+    - 결과
+
+    ![](0.5_reduce.png)
