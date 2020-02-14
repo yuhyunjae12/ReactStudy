@@ -134,7 +134,7 @@
   ```
   - http://localhost:3000/ 테스트
 
-  ![](0.1_chunk.png)
+  ![](0.1_chunk1.png)
 
 - Hoc ( Higher-order Component ) 을 통한 간편한 코드 스플리팅
 
