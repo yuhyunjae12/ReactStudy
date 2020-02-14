@@ -131,30 +131,30 @@
 
       - css import방법
 
-        - css 파일 작성
+      1. css 파일 작성
 
-        ```css
+      ```css
 
-        .HeaderCss{
-            background-color: aquamarine;
+      .HeaderCss{
+          background-color: aquamarine;
+      }
+
+      ```
+      2. css적용 컴포넌트
+
+      ```javascript
+
+        import React from 'react';
+        import './Header.css';
+
+        function Header (){
+            return(
+                <div className='HeaderCss'>
+                    Header
+                </div>
+            );
         }
 
-        ```
-        - css적용 컴포넌트
+        export default Header;
 
-        ```javascript
-
-          import React from 'react';
-          import './Header.css';
-
-          function Header (){
-              return(
-                  <div className='HeaderCss'>
-                      Header
-                  </div>
-              );
-          }
-
-          export default Header;
-
-        ```
+      ```
