@@ -102,3 +102,59 @@
 
         export default App;
     ```
+
+    - React에서의 Css사용
+
+      - 직접 주입하는 방법
+
+      ```javascript
+
+        import React from 'react';
+
+        function Board (){
+
+            // background-color -> backgroundColor 카멜로 표기
+            const style ={
+                backgroundColor : 'red'
+            }
+
+            return(
+                <div style={style}>
+                    Board
+                </div>
+            );
+        }
+
+        export default Board;
+
+      ```
+
+      - css import방법
+
+        - css 파일 작성
+
+        ```css
+
+        .HeaderCss{
+            background-color: aquamarine;
+        }
+
+        ```
+        - css적용 컴포넌트
+
+        ```javascript
+
+          import React from 'react';
+          import './Header.css';
+
+          function Header (){
+              return(
+                  <div className='HeaderCss'>
+                      Header
+                  </div>
+              );
+          }
+
+          export default Header;
+
+        ```
