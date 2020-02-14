@@ -151,7 +151,7 @@
 
       3.테스트 https://localhost:3000
 
-      ![](0.2_commponent.png)
+      ![](0.2_component.png)
 
 
     - React에서의 Css사용
