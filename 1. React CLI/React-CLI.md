@@ -102,6 +102,57 @@
 
         export default App;
     ```
+    - React에서 컴포넌트 생성 호출
+
+      1.src/components/Board/Board.js 생성
+
+      ```javascript
+
+      import React from 'react';
+
+      function Board (){
+
+          return(
+              <div>
+                  Board
+              </div>
+          );
+
+      }
+
+      export default Board;
+
+      ```
+
+      2.src/App.js 수정
+
+      ```javascript
+
+      import React, {Component} from 'react';
+      import './App.css';
+      import Board from './components/Board/Board';
+
+      class App extends Component {
+
+
+        render() {
+          return (
+            <div>
+              <Board/>
+            </div>
+          );
+        }
+      }
+
+      export default App;
+
+
+      ```
+
+      3.테스트 https://localhost:3000
+
+      ![](0.2_commponent.png)
+
 
     - React에서의 Css사용
 
