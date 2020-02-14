@@ -82,3 +82,129 @@
   이함수는 모듈을 비동기적으로 불러오기 때문에 따로 default를 명시해 주어야 합니다.
   이렇게 하고 나서 Chrome 개발자 도구에 NetWork탭을 확인 하게 되면 chunk.js 파일을 호출하게 되고 그안에 notify관련 코드를 확인할 수 있습니다.
   이렇게 분리된 파일을 청크 파일이라고 합니다.
+  import를 함수로 사용하게 되면, 웹팩이 코드를 분리하여 따로 저장하고, import가 호출될때 불러와서 사용 할 수 있게 해줍니다.
+
+
+- 컴포넌트를 코드 스플리팅해보기 
+
+  - src/SplitTest.js 추가
+
+  ```javascript
+
+  import React from 'react';
+
+  const SplitTest =() =>{
+    return <div>splitTest</div>;
+  }
+
+  export default SplitTest;
+  ```
+
+  - src/App.js 수정
+
+  ```javascript
+
+  import React, { Component } from 'react';
+
+  class App extends Component {
+    state ={
+      SplitTest: null
+    };
+    handleClick = () => {
+      import ('./SplitTest').then(({ default:SplitTest}) =>{ 
+        this.setState({
+          SplitTest
+        });
+      });
+    };
+    render() {
+      return (
+        <div>
+          <button onClick={this.handleClick}>Click Me</button>
+          {SplitTest && <SplitTest />}
+        </div>
+      );
+    }
+  }
+
+  export default App;
+
+  ```
+  - http://localhost:3000/ 테스트
+
+- Hoc ( Higher-order Component ) 을 통한 간편한 코드 스플리팅
+
+  - 스플리팅 해야 하는 컴포넌트들이 너무 많다면 위 방법처럼 하나하나 state에 담기가 불편할 것입니다.
+  Hoc을 사용하여 조금더 간편하게 처리하는 방법입니다.
+
+  - src/sharedSplitting.js 추가
+
+  ```javascript
+
+    import React, { Component } from 'react';
+
+    const sharedSplitting = getComponent => {
+      // 여기서 getComponent 는 () => import('./SplitTest') 의 형태로 함수가 전달되야합니다.
+      class sharedSplitting extends Component {
+        state = {
+          Splitted: null
+        };
+
+        constructor(props) {
+          super(props);
+          getComponent().then(({ default: Splitted }) => {
+            this.setState({
+              Splitted
+            });
+          });
+        }
+
+        render() {
+          const { Splitted } = this.state;
+          if (!Splitted) {
+            return null;
+          }
+          return <Splitted {...this.props} />;
+        }
+      }
+
+      return sharedSplitting;
+    };
+
+    export default sharedSplitting;
+
+  ```
+
+  - src/App.js 수정
+
+  ```javascript
+
+  import React, { Component } from 'react';
+  import sharedSplitting from './sharedSplitting';
+
+  // Hoc 을 사용하면 코드 스플리팅을 해야 하는 코드를 상단에 선언해주면 됩니다
+  const SplitMe = sharedSplitting(() => import('./SplitTest'));
+
+  class App extends Component {
+    state = {
+      visible: false
+    };
+    handleClick = () => {
+      this.setState({
+        visible: true
+      });
+    };
+    render() {
+      const { visible } = this.state;
+      return (
+        <div>
+          <button onClick={this.handleClick}>Click Me</button>
+          {visible && <SplitTest />}
+        </div>
+      );
+    }
+  }
+
+  export default App;
+
+  ```
