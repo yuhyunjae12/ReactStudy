@@ -1,5 +1,6 @@
 import React from 'react'
 import ShopItem from './ShopItem';
+import { inject } from 'mobx-react';
 
 const items =[
     {
@@ -20,11 +21,17 @@ const items =[
     }
 ]
 
-export const ShopItemList = () => {
-    const itemList = items.map(item => <ShopItem {...item} key={item.name} />)
+// *** onPut 함수 추가
+const ShopItemList = ({ onPut}) => {
+    const itemList = items.map(item => <ShopItem {...item} key={item.name} onPut={onPut} />)
     return (
         <div>
             {itemList}
         </div>
     )
 }
+
+// *** inject, oberver 적용
+export default inject(({ market }) => ({
+    onput: market.put,
+}))(observer(ShopItemList));

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Counter from './components/Counter'
 import SuperMarket from './components/SuperMarket'
+import DevTools from 'mobx-react-devtools'
 
 export default class App extends Component {
   render() {
@@ -9,6 +10,7 @@ export default class App extends Component {
         <Counter/>
         <hr/>
         <SuperMarket/>
+        {process.env.NODE_ENV === 'development' && <DevTools/>}
       </div>
     )
   }
