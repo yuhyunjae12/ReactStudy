@@ -102,7 +102,7 @@
 
         export default App;
     ```
-    
+
 ## 컴포넌트 생성, CSS적용, 이벤트처리
 
     - React에서 컴포넌트 생성 호출
