@@ -145,10 +145,10 @@
         2. 오류 처리 인터럽트 동작시에 메모리 누수 발생할 수 있음.
         3. React 커뮤니티에서도 가장 혼란을 야기하는 라이프 사이클
 
-        - componentWillMount, componentWillReceiveProps, componentWillUpdate를 v17 부터 사용불가
-        - componentWillReceiveProps 대체 메서드 추가 getDerivedStateFromProps
-        - componentWillUpdate 대체 메서드 추가 getSnapshotBeforeUpdate
-        - componentDidCatch 컴포넌트 에러 핸들링 API 추가
+    - componentWillMount, componentWillReceiveProps, componentWillUpdate를 v17 부터 사용불가
+    - componentWillReceiveProps 대체 메서드 추가 getDerivedStateFromProps
+    - componentWillUpdate 대체 메서드 추가 getSnapshotBeforeUpdate
+    - componentDidCatch 컴포넌트 에러 핸들링 API 추가
 
     ```javascript
 
