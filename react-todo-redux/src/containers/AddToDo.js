@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 
-// 유저가 submit 하면 이 컴포넌트가 액션함수인 addToDo를 생성하는 작업을 리듀서인 리듀서인 toDoApp에 전송
+// 유저가 submit 하면 이 컴포넌트가 액션함수인 addToDo를 생성하는 작업을 리듀서인 toDoApp에 전송
 let AddToDo = ({ dispatch }) => {
   let input;
 
