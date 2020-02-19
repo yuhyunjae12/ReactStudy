@@ -263,3 +263,38 @@
     - 결과
 
     ![](0.5_reduce.png)
+
+- 비구조화 할당 문법..(Ex.[...value])
+
+    - 예제
+
+    ```javascript
+
+    // 배열 [] 혹은 객체 {}값을 편하게 꺼내 쓸 수 있는 문법입니다.
+    function sp1(...no){
+        console.log(no);
+    }
+
+    sp1(1,2,3,4,5,6,7,8,9);
+
+    ```
+
+    - 결과
+
+    ![](0.6_sp.png)
+
+- member import ( import 표현식)
+
+    - 코드를 보시다 보면 익숙하지 않은 import 방식을 볼 수 있습니다.
+
+    ```javascript
+
+        // 기본적인 import 방법
+        import PostContainer from './containers';
+
+        // 이렇게 PostContainer가 {}로 랩핑 되어있는 걸 볼수 있습니다.
+        // 이런 표현식을 member import라고 부르는데
+        // 여러 값을 import할 때 사용합니다. Ex.) import { PostContainer, warrping, post } from './containers';
+        import { PostContainer } from './containers';
+
+    ```
