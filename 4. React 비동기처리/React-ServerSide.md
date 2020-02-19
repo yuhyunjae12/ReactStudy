@@ -16,7 +16,7 @@
 
     - axios 시작하기
 
-    - 기존과 동일하게 create-react-app 으로 프로젝트를 생성
+      - 기존과 동일하게 create-react-app 으로 프로젝트를 생성
 
     - axios 설치
       ```javascript
@@ -45,4 +45,5 @@
 
       - 기존 구조에서 components, containers, service 디렉토리를 추가 하였습니다.
   
-      - 
+      - components와 contatiners에는 디렉토리를 관리하는 index.js를 추가해보았습니다. ( 컴포넌트들을 한곳에서 관리가 가능 )
+

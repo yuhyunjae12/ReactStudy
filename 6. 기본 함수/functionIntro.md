@@ -298,3 +298,67 @@
         import { PostContainer } from './containers';
 
     ```
+
+- Promise 문법
+
+    - Promise문법은 서버에서 받아온 데이터를 화면에 표시할 때 사용 됩니다.
+    기존에 ajax를 사용할때 데이터를 표현하기 위해 스크립트를 작성 하셧을때
+    에러가 난 경험이 있으셨을 수 있습니다.
+
+    저는 대게 api호출하고 결과 값이 response 되기 전에 데이터를 표현하는 스크립트를 작성 하였을때
+    많이 경험 했었는데요 이와 같은 문제점을 해결 하기 위한 방법중 하나가 프로미스입니다.
+    
+    - Promise는 3가지 상태를 가지고 있습니다.
+
+    + Pending(대기) : 비동기 처리 로직이 아직 완료 되지 않은 상태
+    + Fulfilled(이행) : 비동기 처리가 완료 되어 프로미스가 결과 값을 반환해준 상태
+    + Rejected(실패) : 비동기 처리가 실패하거나 오류가 발생한 상태
+
+    - 예제
+
+    ```javascript
+
+    // 프로미스 메서드를 생성하면 pending 상태가 됩니다.
+    new Promise();
+
+    // 프로미스 메서드를 호출할때 콜백 함수의 인자로 resolce, reject에 접근 할 수 있습니다.
+    new Promise(function (resolve, reject){
+        .....
+    })
+
+    // Fulfilled( 이행 ) 콜백함수의 resolve를 실행하게 되면 이행 상태가 됩니다.
+    new Promise(function (resolve, reject){
+        resolve();
+    })
+
+    // 이행 상태가 되면 then()을 이용하여 처리 결과 값을 받을 수 있습니다.
+    function getData(){
+        return new Promise(function (resolve, reject){
+            var data = 100;
+            resolve(data);
+        })
+    }
+
+    getData().then(function (resolvedData){
+        console.log(resolvedData);
+    })
+
+    // rejected ( 실패 ) reject 콜백을 실행하면 실패 상태가 됩니다.
+    new Promise(function (resolve, reject){
+        reject();
+    });
+
+    // 실패 상태를 .catch() 로 받을 수 있습니다.
+    function getData(){
+        return new Promise(function (resolve, reject){
+            reject(new Error('Error'));
+        })
+    }
+
+    getData().then().catch(function (err){
+        console.log(err);
+    })
+
+    ```
+
+    - ( 참고.... ) 이런 프로미스 문법을 좀더 간단 하게 사용하기 위해 ECS8 에서는 async & await를 제공해 줍니다.
