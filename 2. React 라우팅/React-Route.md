@@ -14,11 +14,11 @@
 ```javascript
     
     // 브라우저에서 사용되는 리액트 라우터 입니다.
-    npm add react-router-dom
+    npm i react-router-dom
 
     // 프로젝트에서 NODE_PATH를 사용하여 절대 경로로 파일을 불러 오기위해
     // 환경변수를 공통적인 방법으로 설정 할 수 있게 해주는 라이브러리 입니다.
-    npm add cross-env --dev
+    npm i cross-env --dev
 
 ```
 
