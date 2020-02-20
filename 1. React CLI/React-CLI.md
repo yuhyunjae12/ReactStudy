@@ -109,56 +109,56 @@
 
     ```javascript
 
-    // 첫번쨰 방법 ( 가장 기본적인 방법 )
-    var React = require('react');
+      // 첫번쨰 방법 ( 가장 기본적인 방법 )
+      var React = require('react');
 
-    var App = React.createClass({
-      render : function (){
-        return (
-          <div>
-            컴포넌트 생성 방법 1
-          </div>
-        )
+      var App = React.createClass({
+        render : function (){
+          return (
+            <div>
+              컴포넌트 생성 방법 1
+            </div>
+          )
+        }
+      })
+
+      module.exports = App;
+
+      // 두번째 방법 ( ECS6 문법으로 생성 )
+      import React from 'react';
+
+      const App = React.createClass({
+        render(){
+          return (
+            <div>
+              컴포넌트 생성 방법 2
+            </div>
+          )
+        }
+      })
+
+      export default App;
+
+      // 세번째 방법 ( 순수 ECS6 문법을 사용 )
+      // react에서 제공하는 component class를 상속 받아 구현하기 위해 component import
+      // 이부분은
+      // import React from 'react';
+      // class App extends React.Component
+      // 로 표기 가능합니다.
+      
+      import React, {Component} from 'react';
+
+      class App extends Component{
+        render(){
+          return (
+            <div>
+              컴포넌트 생성 방법 3
+            </div>
+          )
+        }
       }
-    })
 
-    module.exports = App;
-
-    // 두번째 방법 ( ECS6 문법으로 생성 )
-    import React from 'react';
-
-    const App = React.createClass({
-      render(){
-        return (
-          <div>
-            컴포넌트 생성 방법 2
-          </div>
-        )
-      }
-    })
-
-    export default App;
-
-    // 세번째 방법 ( 순수 ECS6 문법을 사용 )
-    // react에서 제공하는 component class를 상속 받아 구현하기 위해 component import
-    // 이부분은
-    // import React from 'react';
-    // class App extends React.Component
-    // 로 표기 가능합니다.
-    
-    import React, {Component} from 'react';
-
-    class App extends Component{
-      render(){
-        return (
-          <div>
-            컴포넌트 생성 방법 3
-          </div>
-        )
-      }
-    }
-
-    export default App;
+      export default App;
 
     ```
 
@@ -168,19 +168,19 @@
 
       ```javascript
 
-      import React from 'react';
+        import React from 'react';
 
-      function Board (){
+        function Board (){
 
-          return(
-              <div>
-                  Board
-              </div>
-          );
+            return(
+                <div>
+                    Board
+                </div>
+            );
 
-      }
+        }
 
-      export default Board;
+        export default Board;
 
       ```
 
@@ -188,23 +188,23 @@
 
       ```javascript
 
-      import React, {Component} from 'react';
-      import './App.css';
-      import Board from './components/Board/Board';
+        import React, {Component} from 'react';
+        import './App.css';
+        import Board from './components/Board/Board';
 
-      class App extends Component {
+        class App extends Component {
 
 
-        render() {
-          return (
-            <div>
-              <Board/>
-            </div>
-          );
+          render() {
+            return (
+              <div>
+                <Board/>
+              </div>
+            );
+          }
         }
-      }
 
-      export default App;
+        export default App;
 
 
       ```
@@ -246,9 +246,9 @@
 
       ```css
 
-      .HeaderCss{
-          background-color: aquamarine;
-      }
+        .HeaderCss{
+            background-color: aquamarine;
+        }
 
       ```
       2. css적용 컴포넌트

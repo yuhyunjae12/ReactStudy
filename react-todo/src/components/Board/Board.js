@@ -1,4 +1,5 @@
 import React from 'react';
+import Child from '../Child/Child';
 
 function Board (){
 
@@ -10,6 +11,7 @@ function Board (){
     return(
         <div style={style}>
             Board
+            <Child name="name">child</Child>
         </div>
     );
 }
