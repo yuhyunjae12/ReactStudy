@@ -105,7 +105,7 @@
 
 ## 컴포넌트 생성, CSS적용, 이벤트처리
 
-    - 컴포넌트 생성 방법
+  - 컴포넌트 생성 방법
 
     ```javascript
 
@@ -162,7 +162,7 @@
 
     ```
 
-    - React에서 컴포넌트 생성 호출
+  - React에서 컴포넌트 생성 호출
 
       1.src/components/Board/Board.js 생성
 
@@ -214,9 +214,9 @@
       ![](0.2_component.png)
 
 
-    - React에서의 Css사용
+  - React에서의 Css사용
 
-      - 직접 주입하는 방법
+    - 직접 주입하는 방법
 
       ```javascript
 
