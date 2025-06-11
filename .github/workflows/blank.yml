@@ -24,7 +24,7 @@ jobs:
           git config --global i18n.logoutputencoding utf-8
 
       - name: Save git diff with UTF-8 encoding
-        shell: pwsh
+        shell: powershell
         run: |
           [System.IO.File]::WriteAllLines(
             "changes.txt",
@@ -33,7 +33,7 @@ jobs:
           )
 
       - name: Deploy changed files (copy/delete/rename)
-        shell: pwsh
+        shell: powershell
         run: |
           $sourceRoot = "$env:GITHUB_WORKSPACE"
           $targetRoot = "C:\study\runner\ReactStudy2"
