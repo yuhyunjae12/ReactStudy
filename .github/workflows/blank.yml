@@ -34,23 +34,49 @@ jobs:
           foreach ($line in $changes) {
             $parts = $line -split "`t"
             $status = $parts[0]
-            $relativePath = $parts[1]
-
-            $sourceFile = Join-Path $sourceRoot $relativePath
-            $targetFile = Join-Path $targetRoot $relativePath
-
+          
             if ($status -eq "D") {
+              $relativePath = $parts[1]
+              $targetFile = Join-Path $targetRoot $relativePath
               if (Test-Path $targetFile) {
                 Write-Host "Deleting $targetFile"
                 Remove-Item -Path $targetFile -Force
               }
-            }
-            elseif ($status -eq "A" -or $status -eq "M") {
+          
+            } elseif ($status -eq "A" -or $status -eq "M") {
+              $relativePath = $parts[1]
+              $sourceFile = Join-Path $sourceRoot $relativePath
+              $targetFile = Join-Path $targetRoot $relativePath
               $targetDir = Split-Path $targetFile
+          
               if (!(Test-Path $targetDir)) {
                 New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
               }
               Write-Host "Copying $sourceFile -> $targetFile"
               Copy-Item -Path $sourceFile -Destination $targetFile -Force
+          
+            } elseif ($status.StartsWith("R")) {
+              # Rename 상태 처리: R<similarity>   oldpath   newpath
+              $oldPath = $parts[1]
+              $newPath = $parts[2]
+          
+              $oldTargetFile = Join-Path $targetRoot $oldPath
+              $newSourceFile = Join-Path $sourceRoot $newPath
+              $newTargetFile = Join-Path $targetRoot $newPath
+          
+              # 삭제: 기존 이름의 파일 제거
+              if (Test-Path $oldTargetFile) {
+                Write-Host "Renamed file: removing $oldTargetFile"
+                Remove-Item -Path $oldTargetFile -Force
+              }
+          
+              # 복사: 새 이름의 파일 복사
+              $newTargetDir = Split-Path $newTargetFile
+              if (!(Test-Path $newTargetDir)) {
+                New-Item -ItemType Directory -Path $newTargetDir -Force | Out-Null
+              }
+          
+              Write-Host "Renamed file: copying $newSourceFile -> $newTargetFile"
+              Copy-Item -Path $newSourceFile -Destination $newTargetFile -Force
             }
           }
