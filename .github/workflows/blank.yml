@@ -22,16 +22,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build (optional)
+      - name: Deploy ReactStudy to C:\study\runner\ReactStudy2
         run: |
-          echo "빌드 중..."
-          mkdir output
-          echo "This is build result"
-
-      - name: Deploy to custom folder
-        run: |
+          $sourcePath = "$env:GITHUB_WORKSPACE"
           $targetPath = "C:\study\runner\ReactStudy2"
-          if (!(Test-Path -Path $targetPath)) {
-            New-Item -ItemType Directory -Path $targetPath -Force
+
+          if (Test-Path $targetPath) {
+            Remove-Item -Path $targetPath -Recurse -Force
           }
-          Copy-Item -Path ".\output\*" -Destination $targetPath -Recurse -Force
+
+          Copy-Item -Path $sourcePath -Destination $targetPath -Recurse -Force
