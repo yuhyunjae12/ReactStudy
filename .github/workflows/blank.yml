@@ -21,7 +21,7 @@ jobs:
       - name: Get changed files with status
         id: changes
         run: |
-          git diff --name-status HEAD~1 HEAD > changes.txt
+          git diff --name-status HEAD~1 HEAD | Out-File -Encoding utf8 changes.txt
           type changes.txt
 
       - name: Apply changes to deployment directory
@@ -29,7 +29,7 @@ jobs:
           $sourceRoot = "$env:GITHUB_WORKSPACE"
           $targetRoot = "C:\study\runner\ReactStudy2"
 
-          $changes = Get-Content changes.txt
+          $changes = Get-Content -Encoding UTF8 changes.txt
 
           foreach ($line in $changes) {
             $parts = $line -split "`t"
