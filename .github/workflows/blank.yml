@@ -16,25 +16,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 전체 Git 기록을 가져와서 diff 가능하게 함
+          fetch-depth: 0  # 전체 기록 필요
 
-      - name: Get changed files with status
-        id: changes
+      - name: Configure Git for UTF-8 output
         run: |
-          git diff --name-status HEAD~1 HEAD | Out-File -Encoding utf8 changes.txt
-          type changes.txt
+          git config --global core.quotepath false
+          git config --global i18n.logoutputencoding utf-8
 
-      - name: Apply changes to deployment directory
+      - name: Save git diff with UTF-8 encoding
+        shell: pwsh
+        run: |
+          [System.IO.File]::WriteAllLines(
+            "changes.txt",
+            (git diff --name-status HEAD~1 HEAD),
+            [System.Text.UTF8Encoding]::new($false)
+          )
+
+      - name: Deploy changed files (copy/delete/rename)
+        shell: pwsh
         run: |
           $sourceRoot = "$env:GITHUB_WORKSPACE"
           $targetRoot = "C:\study\runner\ReactStudy2"
-
           $changes = Get-Content -Encoding UTF8 changes.txt
 
           foreach ($line in $changes) {
             $parts = $line -split "`t"
             $status = $parts[0]
-          
+
             if ($status -eq "D") {
               $relativePath = $parts[1]
               $targetFile = Join-Path $targetRoot $relativePath
@@ -42,41 +50,40 @@ jobs:
                 Write-Host "Deleting $targetFile"
                 Remove-Item -Path $targetFile -Force
               }
-          
+
             } elseif ($status -eq "A" -or $status -eq "M") {
               $relativePath = $parts[1]
               $sourceFile = Join-Path $sourceRoot $relativePath
               $targetFile = Join-Path $targetRoot $relativePath
               $targetDir = Split-Path $targetFile
-          
+
               if (!(Test-Path $targetDir)) {
                 New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
               }
+
               Write-Host "Copying $sourceFile -> $targetFile"
               Copy-Item -Path $sourceFile -Destination $targetFile -Force
-          
+
             } elseif ($status.StartsWith("R")) {
-              # Rename 상태 처리: R<similarity>   oldpath   newpath
+              # Rename (e.g., R100	old.jpg	new.jpg)
               $oldPath = $parts[1]
               $newPath = $parts[2]
-          
+
               $oldTargetFile = Join-Path $targetRoot $oldPath
               $newSourceFile = Join-Path $sourceRoot $newPath
               $newTargetFile = Join-Path $targetRoot $newPath
-          
-              # 삭제: 기존 이름의 파일 제거
+              $newTargetDir = Split-Path $newTargetFile
+
               if (Test-Path $oldTargetFile) {
-                Write-Host "Renamed file: removing $oldTargetFile"
+                Write-Host "Renamed: removing old file $oldTargetFile"
                 Remove-Item -Path $oldTargetFile -Force
               }
-          
-              # 복사: 새 이름의 파일 복사
-              $newTargetDir = Split-Path $newTargetFile
+
               if (!(Test-Path $newTargetDir)) {
                 New-Item -ItemType Directory -Path $newTargetDir -Force | Out-Null
               }
-          
-              Write-Host "Renamed file: copying $newSourceFile -> $newTargetFile"
+
+              Write-Host "Renamed: copying $newSourceFile -> $newTargetFile"
               Copy-Item -Path $newSourceFile -Destination $newTargetFile -Force
             }
           }
