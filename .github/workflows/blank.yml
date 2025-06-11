@@ -1,19 +1,13 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
     runs-on: [self-hosted, windows]
@@ -21,14 +15,42 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 전체 Git 기록을 가져와서 diff 가능하게 함
 
-      - name: Deploy ReactStudy to C:\study\runner\ReactStudy2
+      - name: Get changed files with status
+        id: changes
         run: |
-          $sourcePath = "$env:GITHUB_WORKSPACE"
-          $targetPath = "C:\study\runner\ReactStudy2"
+          git diff --name-status HEAD~1 HEAD > changes.txt
+          type changes.txt
 
-          if (Test-Path $targetPath) {
-            Remove-Item -Path $targetPath -Recurse -Force
+      - name: Apply changes to deployment directory
+        run: |
+          $sourceRoot = "$env:GITHUB_WORKSPACE"
+          $targetRoot = "C:\study\runner\ReactStudy2"
+
+          $changes = Get-Content changes.txt
+
+          foreach ($line in $changes) {
+            $parts = $line -split "`t"
+            $status = $parts[0]
+            $relativePath = $parts[1]
+
+            $sourceFile = Join-Path $sourceRoot $relativePath
+            $targetFile = Join-Path $targetRoot $relativePath
+
+            if ($status -eq "D") {
+              if (Test-Path $targetFile) {
+                Write-Host "Deleting $targetFile"
+                Remove-Item -Path $targetFile -Force
+              }
+            }
+            elseif ($status -eq "A" -or $status -eq "M") {
+              $targetDir = Split-Path $targetFile
+              if (!(Test-Path $targetDir)) {
+                New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+              }
+              Write-Host "Copying $sourceFile -> $targetFile"
+              Copy-Item -Path $sourceFile -Destination $targetFile -Force
+            }
           }
-
-          Copy-Item -Path $sourcePath -Destination $targetPath -Recurse -Force
